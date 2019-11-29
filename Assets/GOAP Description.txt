@@ -1,0 +1,120 @@
+----World State-----:
+Inventory and caravan represented as arrays of spice counts
+Inventory has an extra index for total count in inventory
+* Denotes any value
+
+----Goal State-----:
+Inventory = [*, *, *, *, *, *, *, *]
+Caravan = [2, 2, 2, 2, 2, 2, 2]
+Where player caravan state must be greater than or equal to the goal state
+
+----Trade Actions----: Go to trader and make trade
+1) TradeTu
+Pre Inv = [*, *, *, *, *, *, *, <3]
+PostInv = [+2, *, *, *, *, *, *, +2] 
+Pre Caravan = [*, *, *, *, *, *, *]
+Post Caravan = [*, *, *, *, *, *, *]
+
+2) Trade Sa
+Pre Inv = [>1, *, *, *, *, *, *, <5]
+PostInv = [-2, +1, *, *, *, *, *, -1] 
+Pre Caravan = [*, *, *, *, *, *, *]
+Post Caravan = [*, *, *, *, *, *, *]
+
+3) Trade Ca
+Pre Inv = [*, >1, *, *, *, *, *, <5]
+PostInv = [*, -2, +1, *, *, *, *, -1] 
+Pre Caravan = [*, *, *, *, *, *, *]
+Post Caravan = [*, *, *, *, *, *, *]
+
+
+4) Trade Ci
+Pre Inv = [4, *, *, *, *, *, *, *]
+PostInv = [-4, *, *, +1, *, *, *, -3] 
+Pre Caravan = [*, *, *, *, *, *, *]
+Post Caravan = [*, *, *, *, *, *, *]
+
+5) Trade Cl
+Pre Inv = [>0, *, >0, *, *, *, *, <5]
+PostInv = [-1, *, -1, *, +1, *, *, +1] 
+Pre Caravan = [*, *, *, *, *, *, *]
+Post Caravan = [*, *, *, *, *, *, *]
+
+6) Trade Pe
+Pre Inv = [>1, >0, *, >0, *, *, *, 4]
+PostInv = [-2, -1, *, -1, *, +1, *, -3] 
+Pre Caravan = [*, *, *, *, *, *, *]
+Post Caravan = [*, *, *, *, *, *, *]
+
+7) Trade Su
+Pre Inv = [*, *, 4, *, *, *, *, 4]
+PostInv = [*, *, -4, *, *, *, +1, -3] 
+Pre Caravan = [*, *, *, *, *, *, *]
+Post Caravan = [*, *, *, *, *, *, *]
+
+8) Trade Su2
+Pre Inv = [*, >0, *, >0, >0, *, *, <5]
+PostInv = [*, -1, *, -1, -1, *, +1, -2] 
+Pre Caravan = [*, *, *, *, *, *, *]
+Post Caravan = [*, *, *, *, *, *, *]
+
+----Caravan Actions-----: Go to Caravan and Drop Off
+Pre Inv = [a, b, c, d, e, f, g, <5] where a to g
+Post Inv = [0, 0, 0, 0, 0, 0, 0, 0]
+Pre Caravan = [*, *, *, *, *, *, *]
+Post Caravan = [+a, +b, +c, +d, +e, +f, +g]
+
+
+----Withdrawal Actions----: Go to Caravan and take items
+1) Withdraw Tu
+Pre Inv = [*, *, *, *, *, *, *, <4]
+PostInv = [+1, *, *, *, *, *, *, +1] 
+Pre Caravan = [>0, *, *, *, *, *, *]
+Post Caravan = [-1, *, *, *, *, *, *]
+
+2) Withdraw Sa
+Pre Inv = [*, *, *, *, *, *, *, <4]
+PostInv = [*, +1, *, *, *, *, *, +1] 
+Pre Caravan = [*, >0, *, *, *, *, *]
+Post Caravan = [*, -1, *, *, *, *, *]
+
+3) Withdraw Ca
+Pre Inv = [*, *, *, *, *, *, *, <4]
+PostInv = [*, *, +1, *, *, *, *, +1] 
+Pre Caravan = [*, *, >0, *, *, *, *]
+Post Caravan = [*, *, -1, *, *, *, *]
+
+4) Withdraw Ci
+Pre Inv = [*, *, *, *, *, *, *, <4]
+PostInv = [*, *, *, +1, *, *, *, +1] 
+Pre Caravan = [*, *, *, >0, *, *, *]
+Post Caravan = [*, *, *, -1, *, *, *]
+
+5) Withdraw Cl
+Pre Inv = [*, *, *, *, *, *, *, <4]
+PostInv = [*, *, *, *, +1, *, *, +1] 
+Pre Caravan = [*, *, *, *, >0, *, *]
+Post Caravan = [*, *, *, *, -1, *, *]
+
+6) Withdraw Pe
+Pre Inv = [*, *, *, *, *, *, *, <4]
+PostInv = [*, *, *, *, *, +1, *, +1] 
+Pre Caravan = [*, *, *, *, *, >0, *]
+Post Caravan = [*, *, *, *, *, -1, *]
+
+7) Withdraw Su
+Pre Inv = [*, *, *, *, *, *, *, <4]
+PostInv = [*, *, *, *, *, *, *, +1] 
+Pre Caravan = [*, *, *, *, *, *, >0]
+Post Caravan = [*, *, *, *, *, *, -1]
+
+
+----Composite Actions-----: These are actions that are meant to be executed in order
+The player must be able to satisfy each action's preconditions in order, and their post 
+conditions are applied in order as well.
+
+1) Composite Su
+GoToCaravan -> Withdraw Sa -> Withdraw Ci -> Withdraw Cl -> TradeSu2 -> GoToCaravan
+
+2) Composite Su2
+GoToCaravan -> Withdraw Ca x 4 -> TradeSu -> GoToCaravan
